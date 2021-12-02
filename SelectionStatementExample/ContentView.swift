@@ -13,6 +13,13 @@ struct ContentView: View {
     // The current guess of the user
     @State var currentGuess: Double = 50.0
     
+    // The target that we are trying to guess
+    // Will produce an integer in the range 1 to 100, inclusive
+    let target = Int.random(in: 1...100)
+    
+    // The feedback to the user as they play
+    @State var feedback = ""    // No hint to start the game
+    
     // MARK: Computed properties
     var body: some View {
         VStack {
@@ -34,12 +41,30 @@ struct ContentView: View {
                 .bold()
             
             Button(action: {
-                // NOTE: Output will not be shown unless this app is run in the "full" simulator
-                print("Button was pressed")
+
+                // Make the user's guess into an integer
+                let currentGuessAsInteger = Int(currentGuess)
+                
+                // Compare the user's current guess to the target
+                if currentGuessAsInteger < target {
+                    feedback = "Guess higher next time!"
+                } else if currentGuessAsInteger > target {
+                    feedback = "Guess lower next time."
+                } else {
+                    feedback = "You got it!"
+                }
+                
             }, label: {
                 Text("Submit Guess")
             })
             .buttonStyle(.bordered)
+            
+            Text("The super secret target is \(target)")
+                .padding()
+            
+            Text(feedback)
+                .italic()
+                .padding()
             
             Spacer()
 
