@@ -8,9 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    // MARK: Stored properties
+    // The current guess of the user
+    @State var currentGuess: Double = 50.0
+    
+    // MARK: Computed properties
     var body: some View {
         VStack {
-            Slider(value: .constant(61.0),
+            Slider(value: $currentGuess,
                    in: 0.0...100.0,
                    step: 1.0,
                    label: {
@@ -23,7 +29,7 @@ struct ContentView: View {
                         Text("100")
             })
             
-            Text("61")
+            Text("\(String(format: "%.0f", currentGuess))")
                 .font(.largeTitle)
                 .bold()
             
